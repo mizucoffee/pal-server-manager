@@ -1,0 +1,22 @@
+{
+  "name": "deadream",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "ts-node index.ts"
+  },
+  "author": "",
+  "type": "module",
+  "license": "ISC",
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.4.1",
+    "easy-rcon": "^1.0.3",
+    "rcon-client": "^4.2.4",
+    "typescript-rcon": "^0.1.0"
+  },
+  "devDependencies": {
+    "ts-node": "^10.9.2"
+  }
+}
