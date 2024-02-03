@@ -15,6 +15,7 @@ const client = new Client({
 });
 
 client.on("messageCreate", async ({ author, content, channel }) => {
+  if (author.id !== process.env.DISCORD_ADMIN_ID) return;
   if (author.bot) return;
   if (!content.startsWith("!")) return;
   console.log("[DISCORD] Command received: " + content);
@@ -23,7 +24,7 @@ client.on("messageCreate", async ({ author, content, channel }) => {
       await palServerManager.start(channel);
       break;
     case "!stop":
-      await palServerManager.stop(channel)
+      await palServerManager.stop()
       break;
     case "!backup":
       await palServerManager.backup(channel)
