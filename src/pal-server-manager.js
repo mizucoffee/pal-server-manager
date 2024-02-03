@@ -21,13 +21,17 @@ export class PalServerManager {
       this.process.removeAllListeners("exit");
       // this.start();
     });
-    await sleep(1000);
+    await sleep(5000);
     await this.palCommand.connect();
     console.log(`[PROCESS] PalServer started.`);
   }
 
   async stop(time = 30, message = "PalServer will shut down after 30 seconds.") {
     await this.palCommand.send(`Shutdown ${time} "${message.replace(/\s/g, `_`)}"`);
+  }
+
+  async save() {
+    await this.palCommand.send(`Save`);
   }
 
   async backup() {
