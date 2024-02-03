@@ -42,7 +42,7 @@ export class PalServerManager {
       console.log(`[BACKUP] Backup Starting...`);
       const filename = `PalBackup_${new Date().toLocaleString("ja-JP").replace(/[\/:]/g, "-").replace(/\s/g, "_")}.tar.gz`;
       ChildProcess.execSync(`tar -zcvf ${process.env.PALWORLD_PATH}/${filename} ${process.env.PALWORLD_PATH}/Pal/Saved/SaveGames/0/${process.env.PAL_SERVER_ID}`);
-      ChildProcess.execSync(`aws s3 cp ${process.env.PALWORLD_PATH}/${filename} s3://pal-backup/`);
+      ChildProcess.execSync(`aws s3 cp --endpoint-url ${process.env.S3_ENDPOINT} ${process.env.PALWORLD_PATH}/${filename} s3://pal-backup/`);
       ChildProcess.execSync(`rm ${process.env.PALWORLD_PATH}/${filename}`);
       console.log(`[BACKUP] Backup Completed`);
       this.start();
