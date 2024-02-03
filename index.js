@@ -16,10 +16,14 @@ const client = new Client({
 
 client.on("messageCreate", async ({ author, content, channel }) => {
   if (author.bot) return;
+  if (!content.startsWith("!")) return;
+  console.log("[DISCORD] Command received: " + content);
   switch (content) {
     case "!start":
+      console.log(`[PROCESS] PalServer starting...`);
       await palServerManager.start();
       await channel.send("サーバーを起動しました");
+      console.log(`[PROCESS] PalServer started.`);
       break;
     // case "!stop":
     //   channel.send(await rcon.stop());
@@ -30,7 +34,6 @@ client.on("messageCreate", async ({ author, content, channel }) => {
     default:
       return;
   }
-  console.log("[DISCORD] Command received: " + content);
 });
 
 let currentPlayerCount = null;

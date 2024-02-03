@@ -17,9 +17,9 @@ export class PalServerManager {
     this.process = ChildProcess.exec(`${process.env.PALWORLD_PATH}/PalServer.sh -useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS`);
     this.palCommand = new PalCommand();
     this.process.on("exit", (code, signal) => {
-      console.log(`[PROCESS] PalServer finished. restarting...`);
+      console.log(`[PROCESS] PalServer finished.`);
       this.process.removeAllListeners("exit");
-      this.start();
+      // this.start();
     });
     await sleep(1000);
     await this.palCommand.connect();
