@@ -20,24 +20,20 @@ client.on("messageCreate", async ({ author, content, channel }) => {
   console.log("[DISCORD] Command received: " + content);
   switch (content) {
     case "!start":
-      console.log(`[PROCESS] PalServer starting...`);
-      await palServerManager.start();
-      await channel.send("サーバーを起動しました");
+      await palServerManager.start(channel);
       break;
     case "!stop":
-      console.log(`[PROCESS] PalServer stopping...`);
-      await palServerManager.stop()
-      await channel.send("サーバーを停止しました");
+      await palServerManager.stop(channel)
       break;
     case "!backup":
-      await palServerManager.backup()
+      await palServerManager.backup(channel)
       break;
     case "!players":
-      await channel.send("Players:\n" + (await palServerManager.getPlayerList()).join("\n"));
+      const playerList = (await palServerManager.getPlayerList()).join("\n")
+      await channel.send("Players:\n" + playerList);
       break;
     case "!seeyou":
-      await palServerManager.seeyou()
-      await channel.send("サーバー/Botを停止しました");
+      await palServerManager.seeyou(channel)
       break;
     default:
       return;

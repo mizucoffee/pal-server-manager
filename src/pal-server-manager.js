@@ -13,30 +13,35 @@ export class PalServerManager {
     return this.process !== null && this.process.exitCode === null && await this.palCommand.isConnected();
   }
 
-  async start() {
+  async start(channel) {
+    console.log(`[PROCESS] PalServer starting...`);
     this.process = ChildProcess.exec(`${process.env.PALWORLD_PATH}/PalServer.sh -useperfthreads -NoAsyncLoadingThread -UseMultithreadForDS`);
     this.palCommand = new PalCommand();
-    this.process.on("exit", (code, signal) => {
-      console.log(`[PROCESS] PalServer finished.`);
+    this.process.on("exit", async (code, signal) => {
+      console.log(`[PROCESS] PalServer finished. Restarting...`);
+      await channel.send("サーバーが停止しました。再起動します。");
       this.process.removeAllListeners("exit");
-      // this.start();
+      this.start();
     });
     await sleep(5000);
     await this.palCommand.connect();
     console.log(`[PROCESS] PalServer started.`);
+    await channel.send("サーバーを起動しました");
   }
 
   async stop(time = 30, message = "PalServer will shut down after 30 seconds.") {
-    await this.palCommand.send(`Shutdown ${time} "${message.replace(/\s/g, `_`)}"`);
+    console.log(`[PROCESS] PalServer stopping...`);
+    this.save();
+    await this.palCommand.send(`Shutdown ${time} ${message.replace(/\s/g, `_`)}`);
   }
 
   async save() {
     await this.palCommand.send(`Save`);
   }
 
-  async backup() {
+  async backup(channel) {
     this.process.removeAllListeners("exit");
-    this.process.on("exit", (code, signal) => {
+    this.process.on("exit", async (code, signal) => {
       console.log(`[PROCESS] PalServer Stopped.`);
       this.process = null;
       console.log(`[BACKUP] Backup Starting...`);
@@ -45,14 +50,16 @@ export class PalServerManager {
       ChildProcess.execSync(`aws s3 cp --endpoint-url ${process.env.S3_ENDPOINT} ${process.env.PALWORLD_PATH}/${filename} s3://pal-backup/`);
       ChildProcess.execSync(`rm ${process.env.PALWORLD_PATH}/${filename}`);
       console.log(`[BACKUP] Backup Completed`);
-      this.start();
+      await channel.send("バックアップが完了しました");
+      this.start(channel);
     });
-    await this.stop();
+    await this.stop(channel);
   }
 
-  async seeyou() {
+  async seeyou(channel) {
     this.process.removeAllListeners("exit");
-    this.process.on("exit", (code, signal) => {
+    this.process.on("exit", async (code, signal) => {
+      await channel.send("サーバー/Botを停止しました");
       process.exit(0);
     });
     await this.stop();
