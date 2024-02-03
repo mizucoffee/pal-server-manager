@@ -23,6 +23,7 @@ export class PalServerManager {
     });
     await sleep(1000);
     await this.palCommand.connect();
+    console.log(`[PROCESS] PalServer started.`);
   }
 
   async stop(time = 30, message = "PalServer will shut down after 30 seconds.") {
@@ -32,7 +33,7 @@ export class PalServerManager {
   async backup() {
     this.process.removeAllListeners("exit");
     this.process.on("exit", (code, signal) => {
-      console.log(`[PROCESS] PalServer Stopped`);
+      console.log(`[PROCESS] PalServer Stopped.`);
       this.process = null;
       console.log(`[BACKUP] Backup Starting...`);
       const filename = `PalBackup_${new Date().toLocaleString("ja-JP").replace(/[\/:]/g, "-").replace(/\s/g, "_")}.tar.gz`;

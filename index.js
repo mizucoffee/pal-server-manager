@@ -23,11 +23,11 @@ client.on("messageCreate", async ({ author, content, channel }) => {
       console.log(`[PROCESS] PalServer starting...`);
       await palServerManager.start();
       await channel.send("サーバーを起動しました");
-      console.log(`[PROCESS] PalServer started.`);
       break;
-    // case "!stop":
-    //   channel.send(await rcon.stop());
-    //   break;
+    case "!stop":
+      console.log(`[PROCESS] PalServer stopping...`);
+      channel.send(await palServerManager.stop());
+      break;
     case "!players":
       await channel.send((await rcon.getPlayerList()).join("\n"));
       break;
