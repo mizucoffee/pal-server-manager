@@ -50,6 +50,14 @@ export class PalServerManager {
     await this.stop();
   }
 
+  async seeyou() {
+    this.process.removeAllListeners("exit");
+    this.process.on("exit", (code, signal) => {
+      process.exit(0);
+    });
+    await this.stop();
+  }
+
   versionUpdate() {
     ChildProcess.execSync(`sudo chattr -a ${process.env.PALWORLD_PATH}/Pal/Binaries/Linux/`);
     ChildProcess.execSync(`steamcmd +login anonymous +app_update 2394010 validate +quit`);

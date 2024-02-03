@@ -34,6 +34,9 @@ client.on("messageCreate", async ({ author, content, channel }) => {
     case "!players":
       await channel.send("Players:\n" + (await palServerManager.getPlayerList()).join("\n"));
       break;
+    case "!seeyou":
+      await palServerManager.backup()
+      break;
     default:
       return;
   }
