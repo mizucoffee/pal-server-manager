@@ -41,6 +41,7 @@ export class PalServerManager {
 
   async backup(channel) {
     this.process.removeAllListeners("exit");
+    await channel.send("バックアップを開始します");
     this.process.on("exit", async (code, signal) => {
       console.log(`[PROCESS] PalServer Stopped.`);
       this.process = null;
