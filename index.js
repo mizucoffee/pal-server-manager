@@ -29,7 +29,7 @@ client.on("messageCreate", async ({ author, content, channel }) => {
       channel.send(await palServerManager.stop());
       break;
     case "!players":
-      await channel.send((await rcon.getPlayerList()).join("\n"));
+      await channel.send((await palServerManager.getPlayerList()).join("\n"));
       break;
     default:
       return;
