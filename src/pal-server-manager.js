@@ -31,7 +31,7 @@ export class PalServerManager {
 
   async stop(time = 30, message = "PalServer will shut down after 30 seconds.") {
     console.log(`[PROCESS] PalServer stopping...`);
-    this.save();
+    await this.save();
     await this.palCommand.send(`Shutdown ${time} ${message.replace(/\s/g, `_`)}`);
   }
 
