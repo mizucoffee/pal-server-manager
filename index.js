@@ -32,7 +32,7 @@ client.on("messageCreate", async ({ author, content, channel }) => {
       await palServerManager.backup()
       break;
     case "!players":
-      await channel.send((await palServerManager.getPlayerList()).join("\n"));
+      await channel.send("Players:\n" + (await palServerManager.getPlayerList()).join("\n"));
       break;
     default:
       return;
