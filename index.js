@@ -26,7 +26,8 @@ client.on("messageCreate", async ({ author, content, channel }) => {
       break;
     case "!stop":
       console.log(`[PROCESS] PalServer stopping...`);
-      channel.send(await palServerManager.stop());
+      await palServerManager.stop()
+      await channel.send("サーバーを停止しました");
       break;
     case "!backup":
       await palServerManager.backup()
@@ -36,6 +37,7 @@ client.on("messageCreate", async ({ author, content, channel }) => {
       break;
     case "!seeyou":
       await palServerManager.seeyou()
+      await channel.send("サーバー/Botを停止しました");
       break;
     default:
       return;
