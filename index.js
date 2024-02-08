@@ -1,4 +1,3 @@
-
 import Dotenv from "dotenv";
 import { Client, GatewayIntentBits } from "discord.js";
 import { PalServerManager } from "./src/pal-server-manager.js";
@@ -24,20 +23,20 @@ client.on("messageCreate", async ({ author, content, channel }) => {
       await palServerManager.start(channel);
       break;
     case "!stop":
-      await palServerManager.stop()
+      await palServerManager.stop();
       break;
     case "!backup":
-      await palServerManager.backup(channel)
+      await palServerManager.backup(channel);
       break;
     case "!players":
-      const playerList = (await palServerManager.getPlayerList()).join("\n")
+      const playerList = (await palServerManager.getPlayerList()).join("\n");
       await channel.send("Players:\n" + playerList);
       break;
     case "!update":
-      await palServerManager.versionUpdate(channel)
+      await palServerManager.versionUpdate(channel);
       break;
     case "!seeyou":
-      await palServerManager.seeyou(channel)
+      await palServerManager.seeyou(channel);
       break;
     default:
       return;
@@ -47,7 +46,7 @@ client.on("messageCreate", async ({ author, content, channel }) => {
 let currentPlayerCount = null;
 
 async function timer() {
-  if(palServerManager.isRunning()) {
+  if (palServerManager.isRunning()) {
     const playerList = await palServerManager.getPlayerList();
     const playerCount = playerList.length;
 

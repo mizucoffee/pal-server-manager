@@ -10,7 +10,11 @@ export class PalCommand {
   async connect() {
     this.rcon = RCON();
     try {
-      await this.rcon.connect(process.env.RCON_IP, process.env.RCON_PORT, process.env.RCON_PASSWORD);
+      await this.rcon.connect(
+        process.env.RCON_IP,
+        process.env.RCON_PORT,
+        process.env.RCON_PASSWORD
+      );
       this.connected = true;
     } catch (e) {
       await sleep(1000);
@@ -37,6 +41,6 @@ export class PalCommand {
   }
 
   async isRunning() {
-    return this.rcon.isConnected() // && this.rcon.isConnect();
+    return this.rcon.isConnected(); // && this.rcon.isConnect();
   }
 }
