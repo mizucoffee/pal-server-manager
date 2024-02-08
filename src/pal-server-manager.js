@@ -63,7 +63,7 @@ export class PalServerManager {
         .replace(/[\/:]/g, "-")
         .replace(/\s/g, "_")}.tar.gz`;
       ChildProcess.execSync(
-        `tar -C -zcvf ${process.env.PALWORLD_PATH}/${filename} ${process.env.PALWORLD_PATH}/Pal/Saved/SaveGames/0/${process.env.PAL_SERVER_ID}`
+        `tar -zcvf ${process.env.PALWORLD_PATH}/${filename} -C / ${process.env.PALWORLD_PATH}/Pal/Saved/SaveGames/0/${process.env.PAL_SERVER_ID}`
       );
       ChildProcess.execSync(
         `aws s3 cp --endpoint-url ${process.env.S3_ENDPOINT} ${process.env.PALWORLD_PATH}/${filename} s3://palworld-backup/${filename}`
@@ -99,7 +99,7 @@ export class PalServerManager {
         .replace(/[\/:]/g, "-")
         .replace(/\s/g, "_")}.tar.gz`;
       ChildProcess.execSync(
-        `tar -C -zcvf ${process.env.PALWORLD_PATH}/${filename} ${process.env.PALWORLD_PATH}/Pal/Saved/SaveGames/0/${process.env.PAL_SERVER_ID}`
+        `tar -zcvf ${process.env.PALWORLD_PATH}/${filename} -C / ${process.env.PALWORLD_PATH}/Pal/Saved/SaveGames/0/${process.env.PAL_SERVER_ID}`
       );
       ChildProcess.execSync(
         `aws s3 cp --endpoint-url ${process.env.S3_ENDPOINT} ${process.env.PALWORLD_PATH}/${filename} s3://palworld-backup/${filename}`
