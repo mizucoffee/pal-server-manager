@@ -33,6 +33,9 @@ client.on("messageCreate", async ({ author, content, channel }) => {
       const playerList = (await palServerManager.getPlayerList()).join("\n")
       await channel.send("Players:\n" + playerList);
       break;
+    case "!update":
+      await palServerManager.versionUpdate(channel)
+      break;
     case "!seeyou":
       await palServerManager.seeyou(channel)
       break;
